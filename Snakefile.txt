@@ -1,0 +1,72 @@
+
+rule all:
+    input:
+        taxonomy="results/Diamond_taxonomy/{sample}_profile.txt",
+        resistome="results/Resistome/{sample}_resistome.txt",
+    output:
+        "results/{sample}_finallog.txt",
+    shell:
+        """
+        echo "taxonomy run" >> {output}
+        echo "resistome run" >> {output}
+        """
+
+##### workflow starts here
+
+rule assembly:
+    input:
+        f1="input/{sample}_1.fastq.gz",
+        f2="input/{sample}_2.fastq.gz",
+    params:
+        dir="results/assembly/{sample}",
+    output:
+        "results/assembly/{sample}/final.contigs.fa",
+    conda:
+        "envs/megahit.yml",
+    shell:
+        """
+        mkdir -p {params.dir}
+        megahit -1 {input.f1} -2 {input.f2} -o {params.dir} --presets meta-sensitive --continue
+        """
+
+rule prodigal:
+    input:
+        assembly="results/assembly/{sample}/final.contigs.fa",
+    output:
+        "results/Prodigal/{sample}_proteins.faa",
+    conda:
+        "envs/prodigal.yml",
+    shell:
+        """
+        prodigal -p meta -i {input.assembly} -a {output}
+        """
+
+
+rule Taxonomy:
+    input:
+        protein="results/Prodigal/{sample}_proteins.faa",
+    params:
+        database="databases/XXXXX",
+    output:
+        "results/Diamond_taxonomy/{sample}_profile.txt",
+    conda:
+        "envs/diamond.yml",
+    shell:
+        """
+        diamond blastp --db {params.database} --query {input.protein} --out {output} --outfmt 6 qseqid qlen sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids sscinames  --evalue 0.00001 --threads 64 --id 95 --query-cover 95 --fast --max-target-seqs 1
+        """
+
+
+rule Resistome:
+    input:
+        assembly="results/assembly/{sample}/final.contigs.fa",
+    output:
+        resistome="results/Resistome/{sample}_resistome.txt",
+    conda:
+        "envs/Abricate.yml",
+    shell:
+        """
+        abricate {input.assembly} -db card --threads 16 --minid 80 --mincov 80 > {output.resistome}
+        """
+
+

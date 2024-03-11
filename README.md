@@ -34,7 +34,7 @@ graph LR
     reads[(QC reads)] --> contigs ;
     contigs --> ORF ;
     ORF --> Diamond_tax ;
-    ORF --> Abricate_ARG;
+    contigs --> Abricate_ARG;
     Diamond_tax --> Taxonomic_annotation ;
     Abricate_ARG --> Resistome_annotation ;
     subgraph Rule Assembly
