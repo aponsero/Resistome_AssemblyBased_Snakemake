@@ -27,7 +27,8 @@ The pipeline include 4 steps :
 * Assembly of the reads into contigs using Megahit vXXX
 * Open reading frame prediction using Prodigal vXXX
 * Taxonomy annotation of the contigs using Diamond vXXX
-* Resistome annotation of the contigs using Abricate vXXX
+* Resistome annotation of the contigs using Abricate vXXX against the XXX database
+* Mobilome annotation of the contigs using Diamond vXXX against the XXX database
 
 ```mermaid
 graph LR
@@ -37,6 +38,8 @@ graph LR
     contigs --> Abricate_ARG;
     Diamond_tax --> Taxonomic_annotation ;
     Abricate_ARG --> Resistome_annotation ;
+    ORF --> Diamond_Mobilome;
+    Diamond_Mobilome --> Mobilome_annotation;
     subgraph Rule Assembly
         contigs ;
     end
@@ -50,6 +53,10 @@ graph LR
     subgraph Rule Resistome
         Abricate_ARG ;
         Resistome_annotation ;
+    end
+    subgraph Rule Mobilome
+        Diamond_Mobilome ;
+        Mobilome_annotation ;
     end
 ```
 
