@@ -16,7 +16,7 @@ conda env create snakemake_env --file envs/env_snakemake.yml
 
 ```
 
-Additionally, custom diamond and Abricate databases should be downloaded.
+Additionally, custom Diamond taxonomic and MobileOG databases should be downloaded and prepared.
 
 ** Add here Zenodo link to download databases **
 
@@ -24,11 +24,11 @@ Additionally, custom diamond and Abricate databases should be downloaded.
 
 Below is the overview of the steps included in the pipeline. The pipeline requires reads after quality control and trimming.
 The pipeline include 4 steps :
-* Assembly of the reads into contigs using Megahit vXXX
-* Open reading frame prediction using Prodigal vXXX
-* Taxonomy annotation of the contigs using Diamond vXXX
-* Resistome annotation of the contigs using Abricate vXXX against the XXX database
-* Mobilome annotation of the contigs using Diamond vXXX against the XXX database
+* Assembly of the reads into contigs using Megahit v1.2.9
+* Open reading frame prediction using Prodigal v2.6.3
+* Taxonomy annotation of the contigs using Diamond v2.1.6 against the NCBI nr database
+* Resistome annotation of the contigs using Abricate v1.0.1 against the CARD database
+* Mobilome annotation of the contigs using Diamond v2.1.6 against the MobileOG database
 
 ```mermaid
 graph LR
@@ -69,8 +69,4 @@ As an example, to run the pipeline on the test file (TestPipeline_1.fastq.gz and
 # run snakemake
 snakemake --cores 8 --use-conda results/TestPipeline_finallog.txt
 ```
-
-### Expected outputs
-
-The pipeline will generate XX main output files in the results folder:
 
