@@ -48,7 +48,7 @@ rule Taxonomy:
     input:
         protein="results/Prodigal/{sample}_proteins.faa",
     params:
-        database="databases/XXXXX",
+        database="databases/Taxonomy",
     output:
         "results/Diamond_taxonomy/{sample}_profile.txt",
     conda:
@@ -76,7 +76,7 @@ rule Mobilome:
     input:
         protein="results/Prodigal/{sample}_proteins.faa",
     params:
-        database="databases/XXXXX",
+        database="databases/MobileOG",
     output:
         "results/Diamond_mobilome/{sample}_mobilome.txt",
     conda:
