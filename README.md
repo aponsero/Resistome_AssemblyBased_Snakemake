@@ -16,9 +16,11 @@ conda env create snakemake_env --file envs/env_snakemake.yml
 
 ```
 
-Additionally, custom Diamond taxonomic and MobileOG databases should be downloaded and prepared.
+Additionally, custom Diamond taxonomic and MobileOG databases should be downloaded and built for bowtie. 
+* MobileOG : to be downloaded [here](https://mobileogdb.flsi.cloud.vt.edu/)
+* NCBI nr : to be downloaded [here](https://www.ncbi.nlm.nih.gov/protein/)
 
-** Add here Zenodo link to download databases **
+Place the databases in a folder "database" and name them "MobileOG" and "Taxonomy" respectively.
 
 ## Overview of the pipeline
 
